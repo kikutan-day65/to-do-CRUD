@@ -11,3 +11,8 @@ class EmployeeForm(forms.ModelForm):
             'emp_code',
             'position'
         ]
+
+        labels = {
+            'fullname': 'Full Name',
+            'emp_code': 'EMP. Code',
+        }
