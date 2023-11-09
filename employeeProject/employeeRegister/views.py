@@ -9,11 +9,15 @@ def employee_list(request):
     return render(request, 'employeeRegister/employee_list.html', context)
 
 
-def employee_form(request):
+def employee_form(request, id=0):
     if request.method == 'GET':
-        form = EmployeeForm()
-        context = {'form': form}
-        return redirect(request, 'employeeRegister/employee_form.html', context)
+        if id == 0:
+            form = EmployeeForm()
+        else:
+            employee = Employee.objects.get(pk=id)
+            form = EmployeeForm(instance=employee)
+            context = {'form': form}
+        return render(request, 'employeeRegister/employee_form.html', context)
     
     else:
         form = EmployeeForm(request.POST)
