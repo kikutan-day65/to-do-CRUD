@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .forms import EmployeeForm
+
 
 # Create your views here.
 def employee_list(request):
@@ -6,7 +8,11 @@ def employee_list(request):
 
 
 def employee_form(request):
-    return render(request, 'employeeRegister/employee_form.html')
+    form = EmployeeForm()
+
+    context = {'form': form}
+
+    return render(request, 'employeeRegister/employee_form.html', context)
 
 
 def employee_delete(request):
