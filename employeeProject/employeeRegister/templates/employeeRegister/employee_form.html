@@ -1,10 +1,23 @@
 {% extends 'employeeRegister/base.html' %}
-
+{% load crispy_forms_tags %}
 
 
 {% block content %}
     
-<p>this is just a test paragraph for form</p>
+<form action="" method="POST" autocomplete="off">
+    {% csrf_token %}
+    {{form.fullname|as_crispy_field}}
+    {{form.mobile|as_crispy_field}}
+
+    <div class="row">
+        <div class="col-md-4">
+            {{form.emp_code | as_crispy_field}}
+        </div>
+        <div class="col-md-8">
+            {{form.position | as_crispy_field}}
+        </div>
+    </div>
+</form>
 
 {% endblock content %}
     
