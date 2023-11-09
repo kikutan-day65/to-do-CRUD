@@ -20,8 +20,12 @@ def employee_form(request, id=0):
         return render(request, 'employeeRegister/employee_form.html', context)
     
     else:
-        form = EmployeeForm(request.POST)
-        
+        if id == 0:
+            form = EmployeeForm(request.POST)
+        else:
+            employee = Employee.objects.get(pk=id)
+            form = EmployeeForm(request.POST, instance=employee)
+
         if form.is_valid():
             form.save()
 
