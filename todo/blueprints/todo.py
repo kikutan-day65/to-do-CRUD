@@ -15,9 +15,22 @@ def todo():
     return render_template('todo.html')
 
 
-@bp.route('/create')
+@bp.route('/create', methods=['POST'])
 def create():
-    pass
+    if request.method == 'POST':
+        db = get_db()
+        content = request.form['content']
+        print(content)
+
+        db.execute(
+            "INSERT INTO todo (content) VALUES (?)",
+            (content,)
+        )
+        db.commit()
+
+        return redirect(url_for('todo.todo'))
+    
+    return redirect(url_for('todo.todo'))
 
 
 @bp.route('/update')
