@@ -9,3 +9,7 @@ from todo.db import get_db
 
 bp = Blueprint('todo', __name__, url_prefix='/todo')
 
+
+@bp.route('/')
+def todo():
+    return render_template('todo.html')
