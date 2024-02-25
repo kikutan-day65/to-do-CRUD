@@ -10,9 +10,15 @@ from todo.db import get_db
 bp = Blueprint('todo', __name__, url_prefix='/todo')
 
 
-@bp.route('/')
+@bp.route('/', methods=['GET'])
 def todo():
-    return render_template('todo.html')
+    db = get_db()
+
+    items = db.execute(
+        "SELECT * FROM todo",
+    ).fetchall()
+
+    return render_template('todo.html', items=items)
 
 
 @bp.route('/create', methods=['POST'])
