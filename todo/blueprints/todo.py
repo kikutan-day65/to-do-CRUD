@@ -39,9 +39,25 @@ def create():
     return redirect(url_for('todo.todo'))
 
 
-@bp.route('/update')
-def update():
-    pass
+@bp.route('/update/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    db = get_db()
+
+    if request.method == 'POST':
+        new_item = request.form['content']
+        db.execute(
+            "UPDATE todo SET content = ? WHERE id = ?",
+            (new_item, id)
+        )
+        db.commit()
+        return redirect(url_for('todo.todo'))
+
+    item = db.execute(
+        "SELECT * FROM todo WHERE id = ?",
+        (id,)
+    ).fetchone()
+
+    return render_template('update_form.html', item=item)
 
 
 @bp.route('/delete')
