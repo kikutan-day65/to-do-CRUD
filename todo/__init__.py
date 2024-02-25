@@ -25,4 +25,7 @@ def create_app(test_config=None):
     db.init_app(app)
     
 
+    from .blueprints import todo
+    app.register_blueprint(todo.bp)
+
     return app
