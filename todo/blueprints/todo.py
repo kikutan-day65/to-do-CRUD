@@ -60,7 +60,21 @@ def update(id):
     return render_template('update_form.html', item=item)
 
 
-@bp.route('/delete')
-def delete():
-    pass
+@bp.route('/delete/<int:id>', methods=['GET', 'POST'])
+def delete(id):
+    db = get_db()
 
+    if request.method == 'POST':
+        db.execute(
+            "DELETE FROM todo WHERE id = ?",
+            (id,)
+        )
+        db.commit()
+        return redirect(url_for('todo.todo'))
+
+    item = db.execute(
+        "SELECT * FROM todo WHERE id = ?",
+        (id,)
+    ).fetchone()
+
+    return render_template('delete_form.html', item=item)
